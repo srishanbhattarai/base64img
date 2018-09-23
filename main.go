@@ -13,15 +13,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	f, err := os.Open(os.Args[1])
+	b, err := ioutil.ReadFile(os.Args[1])
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not open file: %v\n", err)
-		os.Exit(1)
-	}
-
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not read file: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Could not read or open file: %v\n", err)
 		os.Exit(1)
 
 	}
@@ -29,4 +23,5 @@ func main() {
 	enc := base64.NewEncoder(base64.StdEncoding, os.Stdout)
 	enc.Write(b)
 	enc.Close()
+	fmt.Println()
 }
